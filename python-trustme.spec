@@ -16,7 +16,6 @@ BuildRequires:	python%{pyver}dist(hatchling)
 BuildRequires:	python%{pyver}dist(cryptography)
 BuildRequires:	python%{pyver}dist(idna)
 # tests
-BuildRequires:	python%{pyver}dist(pip)
 BuildRequires:	python%{pyver}dist(attrs)
 BuildRequires:	python%{pyver}dist(cffi)
 BuildRequires:	python%{pyver}dist(coverage)
@@ -54,7 +53,6 @@ sed -i 's/\r$//' README.rst
 %py_install
 
 %check
-pip install -e .[test]
 pytest -v tests/
 
 %files
