@@ -53,7 +53,7 @@ sed -i 's/\r$//' README.rst
 %py_install
 
 %check
-pytest -v tests/
+%{__python} -m pytest tests/
 
 %files
 %{python3_sitelib}/%{module}/*.py
