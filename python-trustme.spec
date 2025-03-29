@@ -1,4 +1,5 @@
 %define module trustme
+%bcond_with test
 
 Name:		python-trustme
 Version:	1.2.1
@@ -25,6 +26,7 @@ BuildRequires:	python%{pyver}dist(pluggy)
 BuildRequires:	python%{pyver}dist(pyasn1)
 BuildRequires:	python%{pyver}dist(pycparser)
 BuildRequires:	python%{pyver}dist(pyopenssl)
+BuildRequires:	python%{pyver}dist(types-pyOpenSSL)
 BuildRequires:	python%{pyver}dist(pytest)
 BuildRequires:	python%{pyver}dist(service-identity)
 
@@ -43,7 +45,7 @@ your CA, which nobody trusts. But you can trust it. Trust me.
 
 %prep
 %autosetup -n %{module}-%{version} -p1
-# fix README.rst non-Unix EOL encodings
+# correct README.rst non-Unix EOL encoding.
 sed -i 's/\r$//' README.rst
 
 %build
@@ -52,8 +54,11 @@ sed -i 's/\r$//' README.rst
 %install
 %py_install
 
+# tests run locally, disabled for abf.
+%if %{with test}
 %check
 %{__python} -m pytest tests/
+%endif
 
 %files
 %{python3_sitelib}/%{module}/*.py
